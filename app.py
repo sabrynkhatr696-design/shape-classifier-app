@@ -1,20 +1,16 @@
+import os
 import streamlit as st
 import tensorflow as tf
 import numpy as np
 from PIL import Image
+import gdown
 
-# -----------------------------
-# إعدادات الصفحة
-# -----------------------------
 st.set_page_config(
     page_title="Shape Classifier",
     page_icon="🔷",
     layout="centered"
 )
 
-# -----------------------------
-# أسماء الفئات (نفس المشروع)
-# -----------------------------
 CLASS_NAMES = [
     "triangle",
     "trapezoid",
@@ -27,18 +23,24 @@ CLASS_NAMES = [
 ]
 
 IMG_SIZE = (128, 128)
-MODEL_PATH = "shapes_classification.h5"   
+MODEL_PATH = "shapes_classification.h5"
 
-# -----------------------------
-# تحميل الموديل
-# -----------------------------
+FILE_ID = "1NTt_e0gLFYZzk1ryHGuVTyQIHfzKbQ8N"
+GDRIVE_URL = f"https://drive.google.com/uc?id={FILE_ID}"
+
+
+def download_model():
+    if not os.path.exists(MODEL_PATH):
+        with st.spinner("Downloading model file..."):
+            gdown.download(GDRIVE_URL, MODEL_PATH, quiet=False)
+
+
 @st.cache_resource
 def load_model():
+    download_model()
     return tf.keras.models.load_model(MODEL_PATH)
 
-# -----------------------------
-# تجهيز الصورة
-# -----------------------------
+
 def preprocess_image(image_file):
     image = Image.open(image_file).convert("RGB")
     resized = image.resize(IMG_SIZE)
@@ -46,9 +48,7 @@ def preprocess_image(image_file):
     arr = np.expand_dims(arr, axis=0)
     return image, arr
 
-# -----------------------------
-# واجهة التطبيق
-# -----------------------------
+
 st.title("🔷 Geometric Shape Classifier")
 st.write("Upload an image and the model will predict the shape.")
 
@@ -82,7 +82,7 @@ if uploaded_file is not None:
             st.progress(float(prob))
 
     except FileNotFoundError:
-        st.error("❌ Model file 'cnn_model.h5' not found. Make sure it is in the same folder as app.py")
+        st.error("❌ Model file 'shapes_classification.h5' could not be found or downloaded.")
 
     except Exception as e:
         st.error(f"Error: {e}")
