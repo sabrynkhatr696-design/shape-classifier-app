@@ -38,7 +38,7 @@ def download_model():
 @st.cache_resource
 def load_model():
     download_model()
-    return tf.keras.models.load_model(MODEL_PATH)
+    return tf.keras.models.load_model(MODEL_PATH, compile=False)
 
 
 def preprocess_image(image_file):
