@@ -40,5 +40,8 @@ Deployed using Streamlit Community Cloud.
 
 ---
 
+## 📸 App Preview
+![App Screenshot](shape-classifier-result.png)
+
 ## 👤 Author
 **Sabrin Kater**
