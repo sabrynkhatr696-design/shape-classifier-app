@@ -7,6 +7,12 @@ A web application built with **Streamlit** to classify geometric shapes using a 
 ## 🚀 Live Demo
 👉 https://4b7txcqc5pjq25qxgjvbnu.streamlit.app/
 
+
+📌 Note:
+If the app doesn’t load immediately,
+click on "Wake up / Get this app back up"
+and wait a few seconds ⏳ — it will run normally.
+
 ---
 
 ## 📌 Features
